@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>潘江 · 从内容操盘到 AI 智能体</title>
+<meta name="description" content="六年内容操盘，从 3D 建模、剪辑、账号代运营到品牌全案，现在用 AI 把整条链路重做一遍。">
+<link rel="stylesheet" href="./fonts/fonts.css">
+<style>
+:root{
+  --bg:#060403; --bg-soft:#120a05; --deep:#1a0e06;
+  --ink:#f0e0d0; --mid:#9a8271; --accent:#ffa840;
+  --line:rgba(255,168,64,.16); --line-strong:rgba(255,168,64,.36);
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+  --sans:"Almarai",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Helvetica Neue",system-ui,sans-serif;
+  --serif:"Instrument Serif",Georgia,"Songti SC",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent);color:#060403}
+img{display:block}
+a{color:inherit}
+
+/* ============ 1. 首屏：JARVIS 核心 ============ */
+#hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;
+  background:radial-gradient(1200px 720px at 50% 44%, #1c0f07 0%, #0b0603 46%, #050302 100%), var(--bg)}
+#hero .grid{position:absolute;inset:0;pointer-events:none;z-index:1;
+  background-image:
+    linear-gradient(rgba(255,168,64,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,168,64,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(circle at 50% 46%,#000 0%,transparent 78%);
+  mask-image:radial-gradient(circle at 50% 46%,#000 0%,transparent 78%)}
+#hero .core-veil{position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:radial-gradient(46% 42% at 50% 46%, rgba(255,168,64,.05) 0%, rgba(255,168,64,0) 70%)}
+#orb{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2}
+#hero .scanlines{position:absolute;inset:0;z-index:60;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.028) 0 1px,transparent 1px 3px);
+  opacity:.35;mix-blend-mode:overlay}
+#hero .vignette{position:absolute;inset:0;z-index:59;pointer-events:none;
+  box-shadow:inset 0 0 220px 60px rgba(0,0,0,.85)}
+#hero .cnr{position:absolute;width:14px;height:14px;z-index:61;border-color:rgba(255,168,64,.3);border-style:solid;border-width:0}
+#hero .cnr.tl{left:16px;top:16px;border-left-width:1px;border-top-width:1px}
+#hero .cnr.tr{right:16px;top:16px;border-right-width:1px;border-top-width:1px}
+#hero .cnr.bl{left:16px;bottom:16px;border-left-width:1px;border-bottom-width:1px}
+#hero .cnr.br{right:16px;bottom:16px;border-right-width:1px;border-bottom-width:1px}
+
+.hud{position:absolute;inset:0;z-index:10;pointer-events:none;overflow:hidden;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+.hud b{font-weight:500;color:var(--ink);letter-spacing:.12em}
+.hud .top{position:absolute;left:34px;right:34px;top:26px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;pointer-events:auto;text-decoration:none;color:var(--ink)}
+.brand .mark{width:15px;height:13px;fill:var(--accent)}
+.brand .name{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:.14em;color:var(--ink)}
+.brand .ver{font-size:9.5px;color:var(--mid);letter-spacing:.18em;padding-left:8px;border-left:1px solid var(--line)}
+.chips{display:flex;gap:8px;pointer-events:auto}
+.chip{display:flex;align-items:center;gap:7px;height:26px;padding:0 11px;border:1px solid var(--line);border-radius:99px;color:var(--mid);background:rgba(18,10,5,.5);backdrop-filter:blur(6px)}
+.chip i{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 7px rgba(255,168,64,.9)}
+.chip.od{color:var(--ink);border-color:var(--line-strong)}
+.topright{display:flex;align-items:center;gap:18px;pointer-events:auto}
+.clock{font-size:11px;letter-spacing:.16em;color:var(--ink)}
+.navlinks{display:flex;gap:16px;pointer-events:auto}
+.navlinks a{color:var(--mid);text-decoration:none;transition:color .2s}
+.navlinks a:hover{color:var(--accent)}
+.rail{position:absolute;top:50%;transform:translateY(-50%);width:250px;display:flex;flex-direction:column;gap:22px;
+  text-shadow:0 0 14px rgba(4,2,1,.95),0 0 4px rgba(4,2,1,.9)}
+.rail.left{left:34px}
+.rail.right{right:34px;text-align:right;align-items:flex-end}
+.rail h4{font-size:9.5px;font-weight:400;letter-spacing:.24em;color:rgba(154,130,113,.82);margin-bottom:10px}
+.meter{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+.meter .row{display:flex;justify-content:space-between;gap:8px;font-size:10px}
+.meter .bar{height:2px;background:rgba(255,168,64,.14);border-radius:2px;overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--accent);opacity:.85}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:3px 9px;font-size:9.5px;color:var(--mid);margin:0 4px 6px 0}
+.rail.right .tag{margin:0 0 6px 4px}
+.feed{display:flex;flex-direction:column;gap:9px;font-size:9.5px;letter-spacing:.02em;text-transform:none;line-height:1.55;white-space:nowrap}
+.feed div{color:rgba(240,224,208,.72)}
+.feed em{font-style:normal;color:var(--accent)}
+.feed s{text-decoration:none;color:rgba(154,130,113,.8)}
+.plain{color:rgba(240,224,208,.65);text-transform:none;letter-spacing:.04em;line-height:1.7}
+.hud .bot{position:absolute;left:34px;right:34px;bottom:26px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.say{max-width:26em;font-family:var(--sans);font-size:14px;line-height:1.6;color:rgba(240,224,208,.9);pointer-events:auto;text-transform:none;letter-spacing:0}
+.say .cur{display:inline-block;width:2px;height:1.04em;background:var(--accent);vertical-align:-.16em;margin-left:2px;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.acts{display:flex;gap:10px;pointer-events:auto}
+.act{display:flex;align-items:center;gap:9px;height:34px;padding:0 15px;border-radius:99px;border:1px solid var(--line-strong);color:var(--ink);text-decoration:none;font-size:10px;background:rgba(18,10,5,.5);transition:background .2s,color .2s,border-color .2s;text-transform:none;letter-spacing:.06em}
+.act:hover{background:var(--accent);color:#1a0d05;border-color:var(--accent)}
+.act.ghost{border-color:var(--line);color:var(--mid)}
+.act i{width:5px;height:5px;border-radius:50%;background:currentColor}
+.hud .hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;align-items:center;gap:9px;color:rgba(154,130,113,.9)}
+.hud .hint:after{content:"";width:22px;height:1px;background:currentColor;opacity:.6}
+
+/* ============ 2. 故事 ============ */
+.story{background:var(--bg);padding:96px 22px 0}
+.story-card{max-width:1120px;margin:0 auto;background:var(--bg-soft);border-radius:18px;padding:88px 34px;text-align:center}
+@media(min-width:760px){.story-card{padding:110px 64px}}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink);opacity:.6;margin-bottom:26px}
+.statement{font-weight:400;line-height:1.24;letter-spacing:-.02em;
+  font-size:clamp(26px,3.6vw,54px);max-width:20em;margin:0 auto}
+.statement .seg{display:block}
+.statement .seg>span{display:inline-block;opacity:0;transform:translateY(20px);
+  transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.statement.in .seg>span{opacity:1;transform:none}
+.statement .serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.story-body{max-width:680px;margin:56px auto 0;text-align:left;
+  font-size:clamp(12.5px,1.05vw,15px);line-height:2.1;letter-spacing:.01em;color:#dedbc8}
+.story-body span{opacity:.18;transition:opacity .12s linear}
+
+/* 能力卡 */
+.features{position:relative;overflow:hidden;background:var(--bg);padding:96px 22px 110px}
+.features .bg-noise{position:absolute;inset:0;opacity:.15;pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-repeat:repeat;background-size:200px 200px}
+.feat-wrap{position:relative;max-width:1260px;margin:0 auto}
+.feat-head{font-weight:400;font-size:clamp(19px,2.1vw,34px);line-height:1.34;letter-spacing:-.02em;max-width:24em;margin-bottom:44px}
+.feat-head .l2{display:block;color:var(--mid)}
+.feat-grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:700px){.feat-grid{grid-template-columns:1fr 1fr;gap:6px}}
+@media(min-width:1080px){.feat-grid{grid-template-columns:repeat(4,1fr);height:480px}}
+.fcard{position:relative;border-radius:12px;background:var(--deep);padding:22px;display:flex;flex-direction:column;justify-content:space-between;
+  min-height:250px;opacity:0;transform:scale(.97);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.feat-grid.in .fcard{opacity:1;transform:none}
+@media(min-width:1080px){.fcard{min-height:0}}
+.fcard-video{padding:0;overflow:hidden;min-height:240px}
+.fcard-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.fcard-video:hover video{transform:scale(1.03)}
+.fcard-video .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,.1) 52%,transparent)}
+.fcard-video .vc{position:absolute;left:0;right:0;bottom:0;padding:20px}
+.fcard-video .vc p:first-child{font-size:16px;line-height:1.3;color:var(--ink)}
+.fcard-video .vc p:last-child{margin-top:6px;font-size:11px;color:rgba(255,168,64,.6)}
+.fcard .ico{width:40px;height:40px;border-radius:9px;background:rgba(255,255,255,.06);display:grid;place-items:center;margin-bottom:20px}
+.fcard .ico svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:1.6}
+.fcard .fhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.fcard h3{font-size:18px;font-weight:400;line-height:1.25;color:var(--ink)}
+.fcard .no{border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:2px 8px;font-size:10px;color:rgba(255,168,64,.5);font-family:var(--mono)}
+.fcard ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.fcard li{display:flex;gap:8px;font-size:11.5px;line-height:1.55;color:#a9a49c}
+.fcard li:before{content:"";width:12px;height:12px;flex:none;margin-top:3px;
+  background:no-repeat center/9px url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffa840' stroke-width='3'><path d='M20 6 9 17l-5-5'/></svg>")}
+.fcard .more{margin-top:22px;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:rgba(255,168,64,.8);text-decoration:none}
+.fcard .more svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8;transform:rotate(-45deg)}
+
+/* ============ 3. 作品 ribbon ============ */
+#works{position:relative;background:var(--bg)}
+#track{height:540vh;position:relative}
+.w-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
+.w-hl{position:absolute;left:0;right:0;font-weight:400;font-size:clamp(40px,6.7vw,130px);line-height:1;letter-spacing:-.055em;white-space:nowrap;text-align:center;will-change:transform}
+#l1{top:calc(50% - .98em)}
+#l2{top:calc(50% + .03em)}
+#l1 span,#l2 span{display:inline-block}
+#l1 span{margin-right:15vw}
+#l2 span{margin-left:15vw}
+#cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:15em;text-align:center;font-size:clamp(9px,.74vw,13px);font-weight:500;line-height:1.3;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+#glow{position:absolute;left:0;right:0;top:0;height:42%;background:linear-gradient(rgba(255,168,64,.10),rgba(255,168,64,0))}
+#cross{position:absolute;left:32px;right:32px;top:37.5%;height:1px;background:var(--line)}
+#cross i{position:absolute;left:50%;top:-.62em;margin-left:-.3em;font:400 13px var(--mono);font-style:normal;color:var(--mid);background:var(--bg);padding:0 .3em;line-height:1.2}
+#rule{position:absolute;left:3.5vw;right:3.5vw;top:50%;height:1px;background:var(--line);transform-origin:left;transform:scaleX(0)}
+#w-name{position:absolute;left:0;top:0;padding:6px 11px;background:var(--ink);color:var(--bg);border-radius:99px;font-size:11.5px;font-weight:600;letter-spacing:.04em;pointer-events:none;opacity:0;transition:opacity .16s;white-space:nowrap;font-family:var(--sans)}
+#w-hint{position:absolute;left:50%;top:calc(50% + 132px);transform:translateX(-50%);font:400 11.5px var(--mono);letter-spacing:.14em;color:var(--mid);display:flex;align-items:center;gap:10px}
+#w-hint:after{content:"";width:26px;height:1px;background:currentColor;opacity:.6}
+@media(max-width:760px){#w-hint{display:none}#cross{left:18px;right:18px}}
+
+/* ============ 4/5. 列表段：更多作品 / AI 影像 ============ */
+.sect{background:var(--bg);padding:96px 22px 0;position:relative}
+.sect-inner{max-width:1260px;margin:0 auto}
+.sect-head{border-bottom:1px solid var(--line);padding-bottom:44px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+.sect-head h2{font-size:clamp(30px,4.6vw,66px);line-height:1.08;letter-spacing:-.045em;font-weight:400}
+.sect-head h2 .dim{color:var(--mid)}
+.sect-sub{margin-top:20px;max-width:34em;font-size:13.5px;line-height:1.75;color:var(--mid)}
+.cards{display:grid;grid-template-columns:1fr;gap:22px;padding-top:44px}
+@media(min-width:700px){.cards{grid-template-columns:repeat(2,1fr);gap:26px 22px}}
+.card{display:block;text-decoration:none;color:inherit;opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.cards.in .card{opacity:1;transform:none}
+.thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:6px;background:var(--bg-soft)}
+/* AI 段是奇数（5 条）：最后一张跨两栏，别留个洞 */
+#aiCards .card:last-child{grid-column:1/-1}
+#aiCards .card:last-child .thumb{aspect-ratio:21/9}
+@media(max-width:699px){#aiCards .card:last-child .thumb{aspect-ratio:16/9}}
+.thumb img{width:100%;height:100%;object-fit:cover;transform:scale(1.01);transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .4s;opacity:.92}
+.card:hover .thumb img{transform:scale(1.045);opacity:1}
+.thumb:after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,168,64,.10);border-radius:6px}
+.cap{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:13px}
+.cap h3{font-size:15px;font-weight:400;letter-spacing:-.01em}
+.cap span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--mid);white-space:nowrap}
+
+/* ============ 6. 结尾 ============ */
+#contact{background:var(--bg);padding:120px 22px 40px;position:relative;overflow:hidden}
+.contact-inner{max-width:1260px;margin:0 auto;position:relative;z-index:1}
+.contact-inner .glow{position:absolute;left:50%;top:0;width:60vw;height:34vw;transform:translate(-50%,-40%);pointer-events:none;
+  background:radial-gradient(circle,rgba(255,168,64,.13),rgba(255,168,64,0) 68%)}
+.contact-inner h2{font-size:clamp(32px,5.4vw,76px);line-height:1.06;letter-spacing:-.05em;font-weight:400}
+.contact-inner h2 .serif{font-family:var(--serif);font-style:italic}
+.contact-inner .lead{margin-top:26px;max-width:30em;font-size:14px;line-height:1.8;color:var(--mid)}
+.contact-inner .cta{margin-top:38px;display:flex;gap:12px;flex-wrap:wrap}
+.contact-inner .cta a{display:inline-flex;align-items:center;gap:10px;height:42px;padding:0 22px;border-radius:99px;border:1px solid var(--line-strong);color:var(--ink);text-decoration:none;font-size:12.5px;transition:background .2s,color .2s}
+.contact-inner .cta a:hover{background:var(--accent);color:#1a0d05;border-color:var(--accent)}
+.contact-inner .cta a.solid{background:var(--accent);color:#1a0d05;border-color:var(--accent)}
+.contact-inner .cta a.solid:hover{background:#ffb85c}
+.foot{margin-top:110px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);position:relative;z-index:1}
+.foot a{text-decoration:none;color:var(--mid)}
+.foot a:hover{color:var(--accent)}
+
+
+/* ============ 全站固定导航（滚过首屏后出现） ============ */
+#sitenav{position:fixed;left:0;right:0;top:0;z-index:80;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:12px 34px;background:rgba(6,4,3,.72);backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid var(--line);opacity:0;transform:translateY(-8px);pointer-events:none;
+  transition:opacity .35s,transform .35s;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+#sitenav.on{opacity:1;transform:none;pointer-events:auto}
+#sitenav .sn-brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}
+#sitenav .sn-brand svg{width:13px;height:11px;fill:var(--accent)}
+#sitenav .sn-brand span{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.14em}
+#sitenav .sn-links{display:flex;gap:22px}
+#sitenav .sn-links a{color:var(--mid);text-decoration:none;transition:color .2s}
+#sitenav .sn-links a:hover{color:var(--accent)}
+#sitenav .sn-clock{color:var(--ink)}
+@media(max-width:860px){
+  #sitenav{padding:10px 18px}
+  #sitenav .sn-links{gap:14px;font-size:9.5px}
+  #sitenav .sn-clock{display:none}
+}
+@media(max-width:560px){
+  #sitenav .sn-links a:nth-child(2),#sitenav .sn-links a:nth-child(4){display:none}
+}
+
+/* ============ 响应式 ============ */
+@media(max-width:1100px){
+  .rail{display:none}
+  .chips{display:none}
+}
+@media(max-width:760px){
+  .hud .top{left:18px;right:18px;top:18px}
+  .topright{gap:12px}
+  .navlinks{display:none}
+  .hud .bot{left:18px;right:18px;bottom:18px;flex-direction:column;align-items:flex-start;gap:14px}
+  .say{font-size:13px;max-width:100%}
+  .hud .hint{display:none}
+  .brand .name{font-size:15px}
+  .acts{gap:8px;flex-wrap:wrap}
+  .story{padding:64px 14px 0}
+  .story-card{padding:64px 22px;border-radius:14px}
+  .features{padding:64px 14px 76px}
+  .sect{padding:64px 14px 0}
+  .feat-head{margin-bottom:30px}
+  #contact{padding:80px 16px 32px}
+  .foot{margin-top:70px;flex-direction:column;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .say .cur{animation:none}
+  .statement .seg>span{transition:none}
+  .fcard{transition:none}
+  .card{transition:none}
+}
+</style>
+</head>
+<body data-state="listening">
+<nav id="sitenav">
+  <a class="sn-brand" href="#hero"><svg viewBox="0 0 22 18"><path d="M11 0l11 18h-6.2L11 9.6 6.2 18H0z"/></svg><span>JARVIS</span></a>
+  <div class="sn-links">
+    <a href="#story">故事</a><a href="#skills">能力</a><a href="#works-live">作品</a><a href="#more">更多</a><a href="#ai">AI 影像</a><a href="#contact">联系</a>
+  </div>
+  <span class="sn-clock" id="snclock">--:--</span>
+</nav>
+
+
+<!-- ===== 1 首屏 ===== -->
+<section id="hero">
+  <div class="grid"></div>
+  <div class="core-veil"></div>
+  <canvas id="orb"></canvas>
+  <i class="cnr tl"></i><i class="cnr tr"></i><i class="cnr bl"></i><i class="cnr br"></i>
+
+  <div class="hud">
+    <div class="top">
+      <a class="brand" href="#hero">
+        <svg class="mark" viewBox="0 0 22 18"><path d="M11 0l11 18h-6.2L11 9.6 6.2 18H0z"/></svg>
+        <span class="name">JARVIS</span>
+        <span class="ver">v2.0 / 私人智能体</span>
+      </a>
+      <div class="chips">
+        <span class="chip od"><i></i>主服务 在线</span>
+        <span class="chip">模型 qianfan · v4.1</span>
+        <span class="chip">麦克风 关闭</span>
+      </div>
+      <div class="topright">
+        <div class="navlinks">
+          <a href="#story">故事</a><a href="#works-live">作品</a><a href="#skills">能力</a><a href="#contact">联系</a>
+        </div>
+        <span class="clock" id="clock">--:--:--</span>
+      </div>
+    </div>
+
+    <div class="rail left">
+      <div>
+        <h4>系统遥测</h4>
+        <div class="meter"><div class="row"><span>CPU</span><span id="v1">18%</span></div><div class="bar"><i id="b1" style="width:18%"></i></div></div>
+        <div class="meter"><div class="row"><span>MEM</span><span id="v2">42%</span></div><div class="bar"><i id="b2" style="width:42%"></i></div></div>
+        <div class="meter"><div class="row"><span>NET</span><span id="v3">7%</span></div><div class="bar"><i id="b3" style="width:7%"></i></div></div>
+      </div>
+      <div>
+        <h4>当前技能</h4>
+        <span class="tag">内容策划</span><span class="tag">生成式影像</span>
+        <span class="tag">投放与转化</span><span class="tag">智能体编排</span>
+      </div>
+      <div>
+        <h4>会话</h4>
+        <div class="plain">01 建站 · 2026-11<br>02 品牌基线 · 已完成<br>03 作品封面 · 进行中</div>
+      </div>
+    </div>
+
+    <div class="rail right">
+      <div>
+        <h4>工具调用</h4>
+        <div class="feed">
+          <div><s>11:42</s> <em>read</em> 设计/brand.md</div>
+          <div><s>11:43</s> <em>agnes</em> 核心姿态 3 帧</div>
+          <div><s>11:44</s> <em>build</em> site-v9</div>
+          <div><s>11:45</s> <em>screenshot</em> 1440×900</div>
+          <div><s>11:45</s> <em>verify</em> 无外链 · 无报错</div>
+        </div>
+      </div>
+      <div>
+        <h4>记忆命中</h4>
+        <div class="plain">memory_bus · 3 条<br>转型叙事 · 暖金调性</div>
+      </div>
+    </div>
+
+    <div class="bot">
+      <p class="say"><span id="typed"></span><span class="cur" id="cur"></span></p>
+      <div class="acts">
+        <a class="act" href="#story"><i></i>看故事</a>
+        <a class="act ghost" href="#works-live">作品档案</a>
+        <a class="act ghost" href="#contact">联系</a>
+      </div>
+    </div>
+    <div class="hint">向下</div>
+  </div>
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+</section>
+
+<!-- ===== 2 故事 ===== -->
+<section class="story" id="story">
+  <div class="story-card">
+    <p class="eyebrow">个人项目经历</p>
+    <h2 class="statement" id="statement">
+      <span class="seg"><span>我是潘江，</span></span>
+      <span class="seg serif"><span>一个做了六年内容操盘的人。</span></span>
+      <span class="seg"><span>现在用 AI 重做一遍。</span></span>
+    </h2>
+    <p class="story-body" id="storyBody"></p>
+  </div>
+</section>
+
+<!-- 能力卡 -->
+<section class="features" id="skills">
+  <div class="bg-noise"></div>
+  <div class="feat-wrap">
+    <h2 class="feat-head"><span class="l1">六年，把内容这件事从头到尾跑通了。</span><span class="l2">现在，把整条链路交给 AI 重做一遍。</span></h2>
+    <div class="feat-grid" id="featGrid">
+      <div class="fcard fcard-video">
+        <video src="./assets/media/card-film.mp4" poster="./assets/media/card-poster.jpg" autoplay loop muted playsinline preload="metadata"></video>
+        <div class="veil"></div>
+        <div class="vc"><p>从一条片子开始。</p><p>商业成片 · 4K 交付</p></div>
+      </div>
+
+      <div class="fcard">
+        <div>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M7 6V4h10v2M2 12h20"/></svg></div>
+          <div class="fhead"><h3>剪辑与爆款。</h3><span class="no">01</span></div>
+          <ul>
+            <li>影视解说与动漫高光混剪</li>
+            <li>游戏赛事混剪（英雄联盟 / 王者荣耀）</li>
+            <li>单条播放 3000 万+，单期收益 3 万+</li>
+            <li>全平台分发与数据复盘</li>
+          </ul>
+        </div>
+        <a class="more" href="#works-live">看作品 <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="fcard">
+        <div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg></div>
+          <div class="fhead"><h3>从 0 到 1 操盘。</h3><span class="no">02</span></div>
+          <ul>
+            <li>装修 IP 单月客资 500+，转化 26.8%</li>
+            <li>地产中介自然流单月 GMV 600 万+</li>
+            <li>4S 店 / 电视台官号 / 酒店 TVC 全案</li>
+          </ul>
+        </div>
+        <a class="more" href="#more">看档案 <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="fcard">
+        <div>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 14h.01M15 14h.01"/></svg></div>
+          <div class="fhead"><h3>交给 AI 重做。</h3><span class="no">03</span></div>
+          <ul>
+            <li>贾维斯私人助理系统：需求到交付全自动</li>
+            <li>品牌与内容自动搭建流水线</li>
+            <li>多智能体协同与 Agent 工作台</li>
+          </ul>
+        </div>
+        <a class="more" href="#ai">看实验 <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 作品 ribbon ===== -->
+<section id="works">
+  <div id="track">
+  <i id="works-live" aria-hidden="true" style="position:absolute;left:0;top:26%;width:1px;height:1px"></i>
+    <main class="w-stage" id="w-stage">
+      <h1 aria-label="Selected works">
+        <div class="w-hl" id="l1" aria-hidden="true"><span>SELECTED</span></div>
+        <div class="w-hl" id="l2" aria-hidden="true"><span>WORKS</span></div>
+      </h1>
+      <div id="cap">六年，从镜头里到系统里。</div>
+      <div id="glow"></div>
+      <div id="cross"><i>+</i></div>
+      <div id="rule"></div>
+      <canvas id="gl"></canvas>
+      <div id="w-hint">看作品</div>
+      <div id="w-name"></div>
+    </main>
+  </div>
+</section>
+
+<!-- ===== 4 更多作品 ===== -->
+<section class="sect" id="more">
+  <div class="sect-inner">
+    <div class="sect-head">
+      <p class="kicker">More works / 2022—2024</p>
+      <h2>更多作品。<br><span class="dim">它们证明的是交付能力。</span></h2>
+      <p class="sect-sub">商业 TVC、酒店品牌、非遗纪录、城市文旅、电视台官号。这些片子不是主菜，是「我真的按商业标准交付过」的证据。</p>
+    </div>
+    <div class="cards" id="moreCards">
+      <a class="card" href="#more"><div class="thumb"><img src="./img/hebin.jpg" alt="河滨首府 · 地产形象片" loading="lazy"></div><div class="cap"><h3>河滨首府 · 地产形象片</h3><span>商业 TVC · 2023</span></div></a>
+      <a class="card" href="#more"><div class="thumb"><img src="./img/manyin.jpg" alt="漫隐酒店 · 品牌片" loading="lazy"></div><div class="cap"><h3>漫隐酒店 · 品牌片</h3><span>酒店品牌 · 2023</span></div></a>
+      <a class="card" href="#more"><div class="thumb"><img src="./img/jingxiu.jpg" alt="北京绣法 · 京绣非遗" loading="lazy"></div><div class="cap"><h3>北京绣法 · 京绣非遗</h3><span>非遗纪录 · 2023</span></div></a>
+      <a class="card" href="#more"><div class="thumb"><img src="./img/nvdong.jpg" alt="雨林景洪 · 暖冬旅居季" loading="lazy"></div><div class="cap"><h3>雨林景洪 · 暖冬旅居季</h3><span>城市文旅 · 2023</span></div></a>
+      <a class="card" href="#more"><div class="thumb"><img src="./img/yangyang.jpg" alt="西双版纳样样好 · 电视台官号" loading="lazy"></div><div class="cap"><h3>西双版纳样样好 · 电视台官号</h3><span>账号内容 · 2023</span></div></a>
+      <a class="card" href="#more"><div class="thumb"><img src="./img/yulin.jpg" alt="雨林中的人 · 人物短片" loading="lazy"></div><div class="cap"><h3>雨林中的人 · 人物短片</h3><span>人物纪录 · 2023</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 AI 影像 ===== -->
+<section class="sect" id="ai">
+  <div class="sect-inner">
+    <div class="sect-head">
+      <p class="kicker">AI motion / archive</p>
+      <h2>AI 影像实验。<br><span class="dim">留个档，不吹。</span></h2>
+      <p class="sect-sub">这些是 2026 年初做的 AI 影像，用的是当时的模型。生成赛道迭代很快，现在看已经能挑出毛病——所以它们只作为过程记录放在这里，不作为主打。真正在推进的是智能体和工作台。</p>
+    </div>
+    <div class="cards" id="aiCards">
+      <a class="card" href="#ai"><div class="thumb"><img src="./img/2026-03-05_170830.jpg" alt="AI 影像实验 01" loading="lazy"></div><div class="cap"><h3>AI 影像实验 01</h3><span>2026 · 78s</span></div></a>
+      <a class="card" href="#ai"><div class="thumb"><img src="./img/2026-03-05_171011.jpg" alt="AI 影像实验 02" loading="lazy"></div><div class="cap"><h3>AI 影像实验 02</h3><span>2026 · 69s</span></div></a>
+      <a class="card" href="#ai"><div class="thumb"><img src="./img/2026-03-05_171219.jpg" alt="AI 影像实验 03" loading="lazy"></div><div class="cap"><h3>AI 影像实验 03</h3><span>2026 · 88s</span></div></a>
+      <a class="card" href="#ai"><div class="thumb"><img src="./img/2026-03-05_171912.jpg" alt="AI 影像实验 04" loading="lazy"></div><div class="cap"><h3>AI 影像实验 04</h3><span>2026 · 45s</span></div></a>
+      <a class="card" href="#ai"><div class="thumb"><img src="./img/2026-07-27_090834.jpg" alt="AI 影像实验 05" loading="lazy"></div><div class="cap"><h3>AI 影像实验 05</h3><span>2026 · 152s</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6 结尾 ===== -->
+<footer id="contact">
+  <div class="contact-inner">
+    <div class="glow"></div>
+    <h2>这一页还在长。<br><span class="serif">故事才刚写到 AI 这一段。</span></h2>
+    <p class="lead">想看完整作品、项目细节，或者聊合作，都可以直接找我。之后这里会继续长出智能体和工作台的实际案例。</p>
+    <div class="cta">
+      <a class="solid" href="#story">从故事开始</a>
+      <a href="#hero">回到 JARVIS</a>
+    </div>
+    <div class="foot">
+      <span>视觉 / 影像 / 账号 / 实验</span>
+      <span>2026 · 贵阳</span>
+      <a href="#hero">JARVIS v2.0</a>
+    </div>
+  </div>
+</footer>
+
+<script src="./assets/orb.js"></script>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+<script type="module" src="./assets/ribbon.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 时钟 */
+  var clock = document.getElementById('clock');
+  function tick(){
+    var d = new Date(), p = function(n){ return String(n).padStart(2,'0'); };
+    clock.textContent = p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* 遥测抖动 */
+  var bars=[document.getElementById('b1'),document.getElementById('b2'),document.getElementById('b3')];
+  var vals=[document.getElementById('v1'),document.getElementById('v2'),document.getElementById('v3')];
+  var base=[18,42,7];
+  if(!reduce){
+    setInterval(function(){
+      for(var i=0;i<3;i++){
+        var v=Math.max(2,Math.min(96,base[i]+(Math.random()*2-1)*9));
+        bars[i].style.width=v.toFixed(0)+'%'; vals[i].textContent=v.toFixed(0)+'%';
+      }
+    },1400);
+  }
+
+  /* 打字机 */
+  var TEXT='这个网站是我做的。从选题、文案、配色到每一行代码，他只告诉我他想要什么。';
+  var typed=document.getElementById('typed'), cur=document.getElementById('cur');
+  if(reduce){ typed.textContent=TEXT; cur.style.display='none'; }
+  else {
+    setTimeout(function(){
+      var i=0;
+      (function step(){
+        typed.textContent=TEXT.slice(0,++i);
+        if(i<TEXT.length) setTimeout(step,42);
+      })();
+    },600);
+  }
+
+  /* 核心随鼠标偏移 */
+  var orb=document.getElementById('orb');
+  var TX=0,TY=0,CX=0,CY=0,last=performance.now();
+  if(!reduce){
+    window.addEventListener('pointermove',function(e){
+      if(e.pointerType==='touch') return;
+      TX=(e.clientX/window.innerWidth)*2-1; TY=(e.clientY/window.innerHeight)*2-1; last=performance.now();
+    },{passive:true});
+    (function loop(now){
+      var idle=(now-last)>2600;
+      var gx=idle?Math.sin(now/2300)*0.16:TX, gy=idle?Math.sin(now/3100)*0.12:TY;
+      CX+=(gx-CX)*0.06; CY+=(gy-CY)*0.06;
+      orb.style.transform='translate3d('+(CX*14).toFixed(2)+'px,'+(CY*12).toFixed(2)+'px,0)';
+      requestAnimationFrame(loop);
+    })(performance.now());
+  }
+
+  /* 核心离屏暂停 */
+  var hero=document.getElementById('hero');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      orb.dataset.off = es[0].isIntersecting ? '0' : '1';
+    },{threshold:0}).observe(orb);
+  }
+
+  /* 故事段：逐字点亮 */
+  var STORY='2019 年我在江南大学学数字媒体，从 3D 建模入门。2022 年进云南棠棠文化做剪辑，影视解说单条做到 3000 万播放。后来跟着公司转电商，搭直播间、跑巨量投放。2023 年一个人出来做全盘代运营，装修、地产、4S 店、电视台官号都接着做，单月客资 500+，单月 GMV 做到 300 万。2024 年带十人团队，一年接下 30 多个项目。2026 年在贵阳做农产品品牌，把刺梨原汁从 0 做到 40 万 GMV。现在，我把这六年的经验全部拆开，交给 AI 重做一遍。';
+  var body=document.getElementById('storyBody');
+  var chars=Array.from(STORY);
+  body.innerHTML=chars.map(function(c){ return '<span>'+ (c===' '?'&nbsp;':c.replace(/&/g,'&amp;').replace(/</g,'&lt;')) +'</span>'; }).join('');
+  var spans=body.querySelectorAll('span');
+  var total=spans.length, ticking=false;
+
+  function clamp01(x){ return x<0?0:x>1?1:x; }
+  function paintStory(){
+    ticking=false;
+    var r=body.getBoundingClientRect(), vh=window.innerHeight;
+    if(r.bottom<0 || r.top>vh) return;
+    var p=clamp01((vh*0.8-r.top)/(r.height+vh*0.6));
+    for(var k=0;k<total;k++){
+      var st=k/total-0.1, en=k/total+0.05;
+      var t=clamp01((p-st)/Math.max(0.0001,(en-st)));
+      spans[k].style.opacity=(0.18+0.82*t).toFixed(3);
+    }
+  }
+  function onScrollStory(){ if(!ticking){ ticking=true; requestAnimationFrame(paintStory); } }
+  if(reduce){ for(var k2=0;k2<total;k2++) spans[k2].style.opacity='1'; }
+  else { window.addEventListener('scroll',onScrollStory,{passive:true}); window.addEventListener('resize',onScrollStory); paintStory(); }
+
+  /* 入场：statement / 能力卡 / 列表 */
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      // 已经滚到窗口上方（快速跳转时会被漏过），也直接显示
+      var passed = e.boundingClientRect.top < 0;
+      if(e.isIntersecting || passed){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:.06}) : null;
+  // 页面打开时已在上方的，立即显示
+  // IO 只在交叉状态变化时回调；快速滑动会「跳过」元素而不触发，所以配一个滚动兜底
+  function showPassed(){
+    document.querySelectorAll('.cards:not(.in),.feat-grid:not(.in),.statement:not(.in)').forEach(function(el){
+      var rt=el.getBoundingClientRect().top;
+      if(rt < window.innerHeight*0.88){ el.classList.add('in'); if(io) io.unobserve(el); }
+    });
+  }
+  showPassed();
+  var spT=0;
+  window.addEventListener('scroll',function(){
+    if(spT) return; spT=requestAnimationFrame(function(){ spT=0; showPassed(); });
+  },{passive:true});
+
+  var stEl=document.getElementById('statement');
+  if(stEl){
+    // 每个 seg 内按标点/长度切成 2-3 段，做错位上浮
+    stEl.querySelectorAll('.seg>span').forEach(function(s,si){ s.style.transitionDelay=(si*0.09).toFixed(2)+'s'; });
+    if(io) io.observe(stEl); else stEl.classList.add('in');
+  }
+  var fg=document.getElementById('featGrid');
+  if(fg){
+    Array.prototype.forEach.call(fg.children,function(c,ci){ c.style.transitionDelay=(ci*0.09).toFixed(2)+'s'; });
+    if(io) io.observe(fg); else fg.classList.add('in');
+  }
+  ['moreCards','aiCards'].forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    Array.prototype.forEach.call(el.children,function(c,ci){ c.style.transitionDelay=((ci%2)*0.08).toFixed(2)+'s'; });
+    if(io) io.observe(el); else el.classList.add('in');
+  });
+
+
+  /* 固定导航：滚过首屏再出现 */
+  var nav=document.getElementById('sitenav');
+  var snclock=document.getElementById('snclock');
+  var heroEl=document.getElementById('hero');
+  function navTick(){
+    var on=window.scrollY > heroEl.offsetHeight*0.75;
+    nav.classList.toggle('on',on);
+    var d=new Date(), p2=function(n){return String(n).padStart(2,'0')};
+    snclock.textContent=p2(d.getHours())+':'+p2(d.getMinutes());
+  }
+  window.addEventListener('scroll',navTick,{passive:true});
+  navTick(); setInterval(navTick,20000);
+
+
+  /* 作品段兜底：file:// 打开时 ES module 会被浏览器拦（CORS），three 根本加载不了。
+     4 秒内 ribbon 没就位，就自己拼一个静态六格，保证「双击能看」。 */
+  var STILL = [['脆哨 · 产品片','cuishao'],['熙源国际 · 品牌宣传片','xiyuan'],['柯基 · 旅拍 MV','keji'],
+               ['浩宇 · 开工片','haoyu'],['云西乐咖啡 · 品牌片','yunxile'],['花卉园 · 采风片','huahui']];
+  function staticWorks(){
+    var gl=document.getElementById('gl'), stage=document.getElementById('w-stage');
+    if(!stage||document.getElementById('w-fallback')) return;
+    if(gl) gl.style.display='none';
+    var wrap=document.createElement('div');
+    wrap.id='w-fallback';
+    var narrow = window.innerWidth < 820;
+    wrap.style.cssText='position:absolute;inset:0;display:grid;align-content:center;gap:'+(narrow?'14px':'18px')+
+      ';padding:'+(narrow?'0 6vw':'0 5vw')+';grid-template-columns:repeat('+(narrow?2:3)+',1fr);';
+    STILL.forEach(function(pair){
+      var fig=document.createElement('figure');
+      fig.style.cssText='position:relative;margin:0;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#120a05';
+      var img=document.createElement('img');
+      img.src='./media/poster-'+pair[1]+'.jpg'; img.alt=pair[0];
+      img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      var capEl=document.createElement('figcaption');
+      capEl.textContent=pair[0];
+      capEl.style.cssText='position:absolute;left:0;right:0;bottom:0;padding:8px 10px;font:500 11px/1.3 system-ui,sans-serif;color:#f0e0d0;background:linear-gradient(to top,rgba(6,4,3,.92),rgba(6,4,3,0))';
+      fig.appendChild(img); fig.appendChild(capEl);
+      wrap.appendChild(fig);
+    });
+    stage.appendChild(wrap);
+    ['l1','l2'].forEach(function(id){var e=document.getElementById(id); if(e){e.style.opacity='0';}});
+    var cap=document.getElementById('cap'); if(cap) cap.style.opacity='0';
+    var hint=document.getElementById('w-hint'); if(hint) hint.style.display='none';
+  }
+  setTimeout(function(){
+    if(!window.__ribbonReady){ staticWorks(); }
+  }, 4000);
+
+  if(window.Orb){ window.Orb.setState('listening'); }
+})();
+</script>
+</body>
+</html>
